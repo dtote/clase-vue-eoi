@@ -1,13 +1,26 @@
 <template>
     <div class="container">
-        <h1>{{title}} Esto es reactivo</h1>
-        <p v-pre>{{title}} Esto no se interpola</p>
-        <h1 v-once>{{title}} esto no se re renderiza</h1>
-        <p>💥💥💥 Mi primera app vue 3 💥💥💥</p>
-        <p v-cloak>Cuando este elemento cargue, se muestra</p>
-        <p v-html="titlev2"></p>
-        <img :title="picTitle" src="https://www.kindpng.com/picc/m/80-800188_random-user-random-icon-png-transparent-png.png" alt="">
-        <input v-model="title">
+        <h1 v-if="showTitle">{{title}}</h1>
+
+        <!-- Este añade un display none con css -->
+        <h1 v-show="showTitle2">{{title2}}</h1> 
+
+        <ul>
+            <li v-for="u, index in users" :key="index">{{u.name}}</li>
+        </ul>
+        <ul>
+            <li v-for="index in range" :key="index">{{index}}</li>
+        </ul>
+
+        <div>
+            <!-- @click es lo mismo que v-on: -->
+            <!-- @mouseover y @mousemove también están-->
+            <!-- Podriamos especificar el boton a clicar @click.right -->
+            <h3>{{counter}}</h3>
+            <button @click="inc">+</button>
+            <button @click="dec">-</button>
+            <button @click="evento($event, 4)">X</button>
+        </div>
     </div>
 </template>
 
@@ -16,24 +29,28 @@ export default {
     name: "App",
     data() {
         return {
-            title: "¡Vue 3.0!",
-            titlev2: "<em>ola</em>",
-            picTitle: "this is a title"
+            title: "Vue title",
+            showTitle: true,
+            showTitle2: false,
+            users: [{name: "pepe"},{name: "pepe"},{name: "pepe"},{name: "pepe"}],
+            range: 5,
+            counter: 0
+        }
+    },
+    methods: {
+        inc() {
+            this.counter++
+        },
+        dec() {
+            this.counter--
+        },
+        evento(event, args) {
+            console.log(event, args)
         }
     }
 }
 </script>
 
 <style>
-/* Cuando todo lo que tenga esta etiqueta haya cargado, aplica x estilos */
-[v-cloak] {
-    display: none
-}
-body {
-    margin: 0;
-    background: #01AAFC;
-}
-h1 {
-    color: green
-}
+
 </style>
